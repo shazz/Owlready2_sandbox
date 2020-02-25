@@ -13,7 +13,9 @@ with onto:
     class Meat(Ingredient): pass    
     class Ham(Meat): pass
     class Sausage(Meat): pass
-    class Cheese(Meat): pass
+
+    class Cheese(Ingredient): pass
+    class Mozzarella(Cheese): pass
     
     class Vegetables(Ingredient): pass
     class Tomato(Vegetables): pass
@@ -29,18 +31,19 @@ with onto:
 
     # infered subclasses
     class Margarita(Pizza): 
-        equivalent_to = [ Pizza & ( has_ingredient.some(Tomato) & has_ingredient.some(Cheese) ) ]
+        equivalent_to = [ Pizza & ( has_ingredient.some(Tomato) ) & ( has_ingredient.some(Cheese) ) ]
         # equivalent_to = [ Pizza & ( ( has_ingredient.some(Tomato) & has_ingredient.some(Cheese) ) & has_ingredient.exactly(2, Ingredient)) ]
     class Napolitana(Pizza): 
-        equivalent_to = [ Pizza & ( has_ingredient.some(Tomato) & has_ingredient.some(Cheese) & has_ingredient.some(Meat) ) ]
+        equivalent_to = [ Pizza & ( has_ingredient.some(Tomato) ) & ( has_ingredient.some(Cheese) ) & ( has_ingredient.some(Meat) ) ]
         # equivalent_to = [ Pizza & ( ( has_ingredient.some(Tomato) & has_ingredient.some(Cheese) & has_ingredient.some(Meat) ) & has_ingredient.exactly(3, Ingredient)) ]
     class Portlandia(Pizza): 
-        equivalent_to = [ Pizza & ( has_ingredient.only(Tomato)) ]
+        equivalent_to = [ Pizza & ( has_ingredient.only(Tomato) ) ]
     class Indiana(Pizza): 
         equivalent_to = [ Pizza & ( has_ingredient.some(Mango) ) ]
     class Pizzananas(Pizza): 
         equivalent_to = [ Pizza & ( has_ingredient.some(Pineapple) & has_ingredient.some(Ham) & has_ingredient.some(Tomato) ) ]
 
+    # suitable for claases
     class NonVeggyPizza(Pizza):
         equivalent_to = [ Pizza & ( has_ingredient.some(Meat) ) ]
     class VeggyPizza(Pizza):
@@ -50,7 +53,7 @@ with onto:
 
     pizzas = []
     p = Pizza("a_Margarita")
-    p.has_ingredient.append(Cheese())
+    p.has_ingredient.append(Mozzarella())
     p.has_ingredient.append(Tomato())
     p.is_a.append(has_ingredient.only(Cheese | Tomato))
     pizzas.append({ "obj": p, "as known as": Margarita, "suitable for": VeggyPizza })
@@ -70,8 +73,8 @@ with onto:
     p = Pizza("a_Napolitana")
     p.has_ingredient.append(Tomato())
     p.has_ingredient.append(Ham())
-    p.has_ingredient.append(Cheese())
-    p.is_a.append(has_ingredient.only(Tomato | Ham | Cheese))
+    p.has_ingredient.append(Mozzarella())
+    p.is_a.append(has_ingredient.only(Tomato | Ham | Mozzarella))
     pizzas.append({ "obj": p, "as known as": Napolitana, "suitable for": NonVeggyPizza })
 
     p = Pizza("a_Indiana")
