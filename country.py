@@ -63,12 +63,10 @@ with onto:
     montreal.zip_code.append("66023")
     montreal.population.append(1704694)      
 
-    rule = Imp()
-    rule.set_as_rule("City(?c), population(?c, ?pop), greaterThan(?pop, 200000) -> BigCity(?c)")
-    rule.set_as_rule("City(?c), population(?c, ?pop), lessThan(?pop, 30000) -> SmallCity(?c)")
+    Imp().set_as_rule("City(?c), population(?c, ?pop), greaterThan(?pop, 200000) -> BigCity(?c)")
+    Imp().set_as_rule("City(?c), population(?c, ?pop), lessThan(?pop, 30000) -> SmallCity(?c)")
     # Imp().set_as_rule("BigCity(?c), part_of(?c, ?country), abbrev(?country, ?ab), stringEqualIgnoreCase(?ab, 'USA') -> BigCityinUSA(?c)")   
-   # Imp().set_as_rule("SmallCity(?c), part_of(?c, ?country), abbrev(?country, ?ab), stringEqualIgnoreCase(?ab, 'USA') -> SmallCityinUSA(?c)")    
-
+    # Imp().set_as_rule("SmallCity(?c), part_of(?c, ?country), abbrev(?country, ?ab), stringEqualIgnoreCase(?ab, 'USA') -> SmallCityinUSA(?c)")    
     # close_world(Country)
  
 # sync_reasoner_pellet()
